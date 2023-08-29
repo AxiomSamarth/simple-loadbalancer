@@ -11,7 +11,6 @@ import (
 )
 
 func main() {
-	stopChannel := make(chan struct{})
 	lb := loadbalancer.NewLoadbalancer("8080")
 
 	firstServerAddress := "localhost:8000"
@@ -43,7 +42,6 @@ func main() {
 		err = firstServer.Start()
 		if err != nil {
 			log.Printf("error starting firstServer: %s", err.Error())
-			close(stopChannel)
 		}
 	}()
 
@@ -53,7 +51,6 @@ func main() {
 		err = secondServer.Start()
 		if err != nil {
 			log.Printf("error starting secondServer: %s", err.Error())
-			close(stopChannel)
 		}
 	}()
 
@@ -63,7 +60,6 @@ func main() {
 		err = thirdServer.Start()
 		if err != nil {
 			log.Printf("error starting thirdServer: %s", err.Error())
-			close(stopChannel)
 		}
 	}()
 
